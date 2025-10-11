@@ -1,4 +1,4 @@
-name: Release GameLinkFinder
+name: Release PlayStation Link Finder
 
 on:
   push:
@@ -13,23 +13,35 @@ jobs:
       packages: write
 
     steps:
+      # 1. Checkout repository
       - uses: actions/checkout@v4
 
+      # 2. Set up Python
       - name: Set up Python
         uses: actions/setup-python@v4
         with:
           python-version: '3.13.3'
 
+      # 3. Install PyInstaller
       - name: Install dependencies
         run: pip install pyinstaller
 
+      # 4. Clean previous builds to avoid caching issues
+      - name: Clean previous build
+        run: |
+          rmdir /s /q build || echo "No build folder"
+          rmdir /s /q dist || echo "No dist folder"
+          rmdir /s /q __pycache__ || echo "No __pycache__ folder"
+
+      # 5. Build standalone EXE (include games.db)
       - name: Build EXE
         run: |
-          pyinstaller --noconsole --onefile --add-data "games.db;." psl_finder.py
+          pyinstaller --noconsole --onefile --clean --add-data "games.db;." psl_finder.py
 
+      # 6. Upload the EXE to GitHub Release
       - name: Upload EXE to GitHub Release
         uses: softprops/action-gh-release@v2
         with:
-          files: psl_finder.exe
+          files: dist/psl_finder.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
