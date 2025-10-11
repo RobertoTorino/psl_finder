@@ -1,25 +1,41 @@
+import os
+import sys
 import sqlite3
 import tkinter as tk
 from tkinter import ttk, messagebox
 import webbrowser
 
 # === CONFIGURATION ===
-DB_PATH = "games.db"
+# Correctly locate games.db inside PyInstaller bundle or source folder
+if getattr(sys, 'frozen', False):
+    BASE_DIR = sys._MEIPASS  # Folder where PyInstaller extracts the bundle
+else:
+    BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+DB_PATH = os.path.join(BASE_DIR, "games.db")
 
 
 # === DATABASE FUNCTIONS ===
 def get_tables_with_columns(db_path, required_columns=("GameId", "GameTitle", "Link")):
     """Return all tables that contain the required columns."""
-    conn = sqlite3.connect(db_path)
+    try:
+        conn = sqlite3.connect(db_path)
+    except Exception as e:
+        messagebox.showerror("Database Error", f"Could not open database:\n{e}")
+        sys.exit(1)
+
     cursor = conn.cursor()
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
     tables = [row[0] for row in cursor.fetchall()]
     valid_tables = []
     for table in tables:
-        cursor.execute(f"PRAGMA table_info({table});")
-        columns = [row[1] for row in cursor.fetchall()]
-        if all(col in columns for col in required_columns):
-            valid_tables.append(table)
+        try:
+            cursor.execute(f"PRAGMA table_info({table});")
+            columns = [row[1] for row in cursor.fetchall()]
+            if all(col in columns for col in required_columns):
+                valid_tables.append(table)
+        except Exception:
+            continue
     conn.close()
     return valid_tables
 
@@ -30,12 +46,15 @@ def search_games_across_tables(query, tables):
     cursor = conn.cursor()
     results = []
     for table in tables:
-        cursor.execute(f"""
-            SELECT ?, GameId, GameTitle, Link
-            FROM {table}
-            WHERE GameTitle LIKE ?
-        """, (table, f"%{query}%"))
-        results.extend(cursor.fetchall())
+        try:
+            cursor.execute(f"""
+                SELECT ?, GameId, GameTitle, Link
+                FROM {table}
+                WHERE GameTitle LIKE ?
+            """, (table, f"%{query}%"))
+            results.extend(cursor.fetchall())
+        except sqlite3.OperationalError:
+            continue
     conn.close()
     return results
 
@@ -72,9 +91,14 @@ def on_open_link(event=None):
 
 
 # === INITIAL SETUP ===
+if not os.path.exists(DB_PATH):
+    messagebox.showerror("Missing Database", f"games.db not found:\n{DB_PATH}")
+    sys.exit(1)
+
 TABLES_WITH_LINKS = get_tables_with_columns(DB_PATH)
 if not TABLES_WITH_LINKS:
-    raise SystemExit("No tables with GameId, GameTitle, and Link columns found.")
+    messagebox.showerror("Error", "No tables with GameId, GameTitle, and Link columns found.")
+    sys.exit(1)
 
 
 # === GUI SETUP ===
@@ -118,4 +142,3 @@ results_list.bind("<Double-1>", on_open_link)
 
 # Run app
 root.mainloop()
-
