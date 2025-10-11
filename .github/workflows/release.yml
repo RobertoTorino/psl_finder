@@ -29,9 +29,7 @@ jobs:
       # 4. Clean previous builds to avoid caching issues
       - name: Clean previous build
         run: |
-          rmdir /s /q build || echo "No build folder"
-          rmdir /s /q dist || echo "No dist folder"
-          rmdir /s /q __pycache__ || echo "No __pycache__ folder"
+          Remove-Item -Recurse -Force -ErrorAction SilentlyContinue build, dist, __pycache__
 
       # 5. Build standalone EXE (include games.db)
       - name: Build EXE
