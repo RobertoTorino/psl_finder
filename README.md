@@ -1,4 +1,4 @@
-# PSL Finder - PlayStation Link Finder
+# PSL Finder - PS Link Finder
 
 Database (SQ-Lite) which contains ID's:
 - for probably all Namco357/Namco369 games (most ID's are identical).

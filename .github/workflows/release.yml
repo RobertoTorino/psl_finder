@@ -1,4 +1,4 @@
-name: Release PlayStation Link Finder
+name: Release PS Link Finder
 
 on:
   push:

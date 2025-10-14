@@ -1,4 +1,4 @@
-PSL Finder - PlayStation Link Finder
+PSL Finder - PS Link Finder
 
 Database (SQ-Lite) which contains:
 - probably all PS3/Namco357/Namco369 games.

@@ -287,7 +287,7 @@ TABLE_OPTIONS = ["All"] + TABLES_WITH_LINKS
 
 # === GUI SETUP ===
 root = tk.Tk()
-root.title("PlayStation Link Finder — Search by Title, Table, and Region")
+root.title("PS Link Finder — Search by Title, Table and Region")
 root.geometry("1100x500")
 root.resizable(False, False)
 
