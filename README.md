@@ -1,10 +1,11 @@
 # PSL Finder - PlayStation Link Finder
 
-Database (SQ-Lite) which contains:
-- probably all PS3/Namco357/Namco369 games.
-- Probably all PSP/PSN Games.
-- probably all PS Vita/PSN Games.
-- Probably all PSX/PSN Games.
+Database (SQ-Lite) which contains ID's:
+- for probably all Namco357/Namco369 games (most ID's are identical).
+- for probably all PS3 games.
+- for probably all PSP/PSN Games.
+- for probably all PS Vita/PSN Games.
+- for probably all PSX/PSN Games.
   and more...
 
 Use DB Browser to CRUD the database: https://sqlitebrowser.org/

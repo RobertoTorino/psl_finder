@@ -34,9 +34,7 @@ jobs:
       # 5. Build standalone EXE (include games.db)
       - name: Build EXE
         run: |
-          pyinstaller --noconsole --onefile --clean --strip --add-data "games.db;." --upx-dir "upx" psl_finder.py
-
-
+          pyinstaller --noconsole --onefile --clean psl_finder.py --add-data "games.db;." --noupx
       # 6. Upload the EXE to GitHub Release
       - name: Upload EXE to GitHub Release
         uses: softprops/action-gh-release@v2
