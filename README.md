@@ -11,8 +11,11 @@ Use DB Browser to CRUD the database: https://sqlitebrowser.org/
 
 Features:
 - Gui with search option and button to open the link (download).
+- Update: filter and search on all tables or on a specific table instead of only on all tables.
 
 ![pslf.png](images/pslf.png)
+
+![pslf2.png](images/pslf2.png)
 
 
 ![github.png](images/github.png)            

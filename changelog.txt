@@ -1,1 +1,1 @@
-Fixed wrong icons.
+Added more search filters.
