@@ -1,18 +1,21 @@
 # PSL Finder - PS Link Finder
 
 Database (SQ-Lite) which contains ID's:
-- for probably all Namco357/Namco369 games (most ID's are identical).
-- for probably all PS3 games.
-- for probably all PSP/PSN Games.
-- for probably all PS Vita/PSN Games.
-- for probably all PSX/PSN Games.
+- for most all NAMCO357 games
+- for most all PS3 games.
+- for most all PSP/PSN Games.
+- for most all PS Vita/PSN Games.
+- for most all PSX/PSN Games.
   and more...
 
-Use DB Browser to CRUD the database: https://sqlitebrowser.org/
+Use DB Browser: https://sqlitebrowser.org/
 
 Features:
 - Gui with search option and button to open the link (download).
 - Update: filter and search on all tables or on a specific table instead of only on all tables.
+- Update: clean-up.
+
+ToDo: clean up the databases.
 
 ![pslf.png](images/pslf.png)
 
